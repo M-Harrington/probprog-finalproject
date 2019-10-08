@@ -6,4 +6,5 @@ running the heavy part of the analysis.  Smaller files (module-like) for testing
 #### TODO:
 - Import well data
 - Define ROI
-- Update classification over larger swatch of area 
+- Update classification over larger number of time periods (on only the smaller area)
+- For updating, fix some old code to be compatible with Landsat 5 instead of Landsat 7
