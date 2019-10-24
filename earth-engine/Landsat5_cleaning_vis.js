@@ -18,10 +18,10 @@ var dataset = ee.ImageCollection('LANDSAT/LT05/C01/T1_SR')
                   
                   var visParams = {
   bands: ['B5', 'B4', 'B3'],
-  min: 0,
+  min: 1200,
   max: 4000,
-  gamma: 1.4,
-};  // Worth going into settings under layers to change stretch to 90% for nice visualization
+  gamma: .6,
+};  // Above params close to matching stretch to 90% (can play with these)
 
 Map.setCenter(71.48545013599528, 26.203854380719925, 8);
 Map.addLayer(dataset.median(), visParams);
