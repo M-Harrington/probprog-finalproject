@@ -17,11 +17,11 @@ var dataset = ee.ImageCollection('LANDSAT/LT05/C01/T1_SR')
                   .map(cloudMaskL457);
                   
                   var visParams = {
-  bands: ['B3', 'B2', 'B1'],
+  bands: ['B5', 'B4', 'B3'],
   min: 0,
-  max: 3000,
+  max: 4000,
   gamma: 1.4,
-};
+};  // Worth going into settings under layers to change stretch to 90% for nice visualization
 
-Map.setCenter(7.1356, 44.9648, 8);
+Map.setCenter(71.48545013599528, 26.203854380719925, 8);
 Map.addLayer(dataset.median(), visParams);
