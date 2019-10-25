@@ -23,7 +23,7 @@ var dataset = ee.ImageCollection('LANDSAT/LT05/C01/T1_SR')
   gamma: .6,
 };  // Above params close to matching stretch to 90% (can play with these)
 
-Map.setCenter(71.48545013599528, 26.203854380719925, 8);
+Map.setCenter(71.48545013599528, 26.203854380719925, 9);
 Map.addLayer(dataset.median(), visParams);
 
 
