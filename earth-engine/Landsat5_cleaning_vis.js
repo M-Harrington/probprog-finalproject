@@ -25,3 +25,21 @@ var dataset = ee.ImageCollection('LANDSAT/LT05/C01/T1_SR')
 
 Map.setCenter(71.48545013599528, 26.203854380719925, 8);
 Map.addLayer(dataset.median(), visParams);
+
+
+
+// Region of Interest
+var geometry = 
+    /* color: #98ff00 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[71.18575854846165, 26.77769880073871],
+          [71.18575854846165, 25.65411556477628],
+          [71.87240405627415, 25.65411556477628],
+          [71.87240405627415, 26.77769880073871]]], null, false);
+          
+Map.addLayer(geometry);
