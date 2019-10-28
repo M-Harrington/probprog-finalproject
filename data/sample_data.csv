@@ -1,0 +1,14 @@
+type,latitude,longitude,observation
+well,6,10,-2
+well,10,7,-4
+well,2,3,-2
+well,8,6,-3
+well,0,0,-3
+well,4,6,-3
+well,6,2,-4
+well,2,8,-1
+farm,2,0,5
+farm,6,8,5
+farm,8,2,7
+farm,10,8,3
+farm,5,4,2
