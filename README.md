@@ -7,7 +7,8 @@ We aim to use a model similar to Gaussian Process/Kernel regression to determine
 
 
 
-<hr><\hr>
+*********
+
 ## Final Project Logistics
 We have included a example of a Jupyter notebook under
 `/notebook-example/example.ipynb`. This shows how to use markdown along with
