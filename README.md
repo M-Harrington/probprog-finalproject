@@ -3,16 +3,12 @@
 This is the final project repository template for
 [Machine Learning with Probabilistic Programming](http://www.proditus.com/mlpp2019).
 
-## Duplicating your own copy of this repository
+We aim to use a model similar to Gaussian Process/Kernel regression to determine the impact of farms on the level of groundwater.  We use a spatial-temporal model to determine the impact of classified farmland pixels from satellite imagery on specific wells' times series. We use Hamiltonian Monte Carlo to draw samples from our posterior and a random forest with convolutions in Google Earth Engine to classify farmland.
 
-Please follow these
-[instructions](https://help.github.com/articles/duplicating-a-repository/)
-to make a copy of this repository and push it to your own GitHub account.
 
-Make sure to create a **new repository** on your own GitHub account before
-starting this process.
 
-## Final Project Notebook
+<hr><\hr>
+## Final Project Logistics
 We have included a example of a Jupyter notebook under
 `/notebook-example/example.ipynb`. This shows how to use markdown along with
 LaTeX to create section headings and typeset math.
