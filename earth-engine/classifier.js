@@ -5,6 +5,12 @@ var all_layers= goodComposite.addBands(
       ndvi);
 
 
+//Band list : 'B5', 'B4', 'B3','B2','evi','se_evi', 'se2_b3','se2_b4', 'se2_b5',
+//            'se3_b3','se3_b4', 'se3_b5', 'gauss_b3','gauss_b4','gauss_b5'
+
+var bands = ['B5', 'B4', 'B3','B2','evi','se_evi', 'se2_b3','se2_b4', 'se2_b5',
+             'se3_b3','se3_b4', 'se3_b5', 'gauss_b3','gauss_b4','gauss_b5'];
+
 // create image collection for the classifier
 var bands =['B1','B2','B3', 'B4','B5','B6_VCID_2','B7','eb_ndvi', 'eb_pan', 'NDVI','B8'];
 var farm_points= all_layers.select(bands).sampleRegions({
