@@ -42,7 +42,7 @@ var gauss_smooth = dataset_med.convolve(gaus);
 
 // (Optional) Visualization
 Map.addLayer(smooth_edge_evi);
+Map.addLayer(smooth_edge1,visParams_can);
 Map.addLayer(smooth_edge2,visParams_can);
-Map.addLayer(smooth_edge3,visParams_can);
 Map.addLayer(gauss_smooth,visParams_can);
 
