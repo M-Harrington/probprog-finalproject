@@ -4,7 +4,7 @@ var all_layers= dataset_med.addBands(
   smooth_edge1.select(['B5','B4','B3'],['se1_b5','se1_b4','se1_b3'])).addBands(
   smooth_edge2.select(['B5','B4','B3'],['se2_b5','se2_b4','se2_b3'])).addBands(
   gauss_smooth.select(['B5','B4','B3'],['gauss_b5','gauss_b4','gauss_b3'])).addBands(
-  evi.select(['constant'],['evi']);
+  evi.select(['constant'],['evi']));
   
 
 //Band list : 'B5', 'B4', 'B3','B2','evi','se_evi', 'se2_b3','se2_b4', 'se2_b5',
