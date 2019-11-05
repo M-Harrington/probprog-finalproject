@@ -1,30 +1,33 @@
 // Classification and CV scheme
-var all_layers= goodComposite.addBands(
-  edgeBuffer_NDVI.select(['NDVI'],['eb_ndvi'])).addBands(
-    edgeBuffer_Pan.select(['B8'],['eb_pan'])).addBands(
-      ndvi);
-
+var all_layers= dataset_med.addBands(
+  smooth_edge_evi.select(['constant'],['evi_conv'])).addBands(
+  smooth_edge1.select(['B5','B4','B3'],['se1_b5','se1_b4','se1_b3'])).addBands(
+  smooth_edge2.select(['B5','B4','B3'],['se2_b5','se2_b4','se2_b3'])).addBands(
+  gauss_smooth.select(['B5','B4','B3'],['gauss_b5','gauss_b4','gauss_b3']));
+  
 
 //Band list : 'B5', 'B4', 'B3','B2','evi','se_evi', 'se2_b3','se2_b4', 'se2_b5',
 //            'se3_b3','se3_b4', 'se3_b5', 'gauss_b3','gauss_b4','gauss_b5'
 
-var bands = ['B5', 'B4', 'B3','B2','evi','se_evi', 'se2_b3','se2_b4', 'se2_b5',
-             'se3_b3','se3_b4', 'se3_b5', 'gauss_b3','gauss_b4','gauss_b5'];
 
-// create image collection for the classifier
-var bands =['B1','B2','B3', 'B4','B5','B6_VCID_2','B7','eb_ndvi', 'eb_pan', 'NDVI','B8'];
+// create image collection for the classifier (last two are satellite characteristics)
+var bands = ['B5', 'B4', 'B3','B2','evi','se_evi', 'se2_b3','se2_b4', 'se2_b5',
+             'se3_b3','se3_b4', 'se3_b5', 'gauss_b3','gauss_b4','gauss_b5','pixel_qa','radsat_qa'];
+
+
+
 var farm_points= all_layers.select(bands).sampleRegions({
-  collection:farm_polys,
-  properties:['farm'],
+  collection:Farmland,
   scale:30
 });
 
 var nf_points= all_layers.select(bands).sampleRegions({
-  collection:notfarm_polys,
-  properties:['farm'],
+  collection:NotFarmland,
   scale:30
 });
 
+
+//Decrease size of training/testing points for computational times (not clear if still needed)  
 var all_points = nf_points.randomColumn('x',12412).filter(ee.Filter.lte('x',0.02)).merge(farm_points);
 
 
@@ -38,7 +41,7 @@ var training= temp_points.filter(ee.Filter.gt('x',0.1));
 // Make a Random Forest classifier and train it.
 var classifier = ee.Classifier.randomForest().train({
   features: training,
-  classProperty: 'farm',
+  classProperty: 'farm',    ////This actually might be necessary, which means would have to change some of the imports
   inputProperties: bands
 });
 
