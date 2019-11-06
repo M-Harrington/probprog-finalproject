@@ -6,11 +6,6 @@ var all_layers= dataset_med.addBands(
   gauss_smooth.select(['B5','B4','B3'],['gauss_b5','gauss_b4','gauss_b3'])).addBands(
   evi.select(['constant'],['evi']));
   
-
-//Band list : 'B5', 'B4', 'B3','B2','evi','se_evi', 'se2_b3','se2_b4', 'se2_b5',
-//            'se3_b3','se3_b4', 'se3_b5', 'gauss_b3','gauss_b4','gauss_b5'
-
-
 // create image collection for the classifier (last two are satellite characteristics)
 var bands = ['B5', 'B4', 'B3','B2','evi','se_evi', 'se2_b3','se2_b4', 'se2_b5',
              'se1_b3','se1_b4', 'se1_b5', 'gauss_b3','gauss_b4','gauss_b5','pixel_qa','radsat_qa'];
@@ -19,11 +14,13 @@ var bands = ['B5', 'B4', 'B3','B2','evi','se_evi', 'se2_b3','se2_b4', 'se2_b5',
 
 var farm_points= all_layers.select(bands).sampleRegions({
   collection:Farmland,
+  properties:['farm'],
   scale:30
 });
 
 var nf_points= all_layers.select(bands).sampleRegions({
   collection:NotFarmland,
+  properties:['farm'],
   scale:30
 });
 
