@@ -1,6 +1,3 @@
-//Data for training and testing farmland classification RF
-//Currently only sampled from '2011-01-01', '2011-2-26'
-
 var Farmland = /* color: #ffc82d */ee.FeatureCollection(
         [ee.Feature(
             ee.Geometry.Polygon(
@@ -39,7 +36,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.27477682882682, 26.4948655337838],
                   [71.27258814627066, 26.492753067111256]]]),
             {
-
               "farm": 1,
               "system:index": "3"
             }),
@@ -50,7 +46,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.65303045217229, 26.59307087946561],
                   [71.65633493367864, 26.595258248409337]]]),
             {
-
               "farm": 1,
               "system:index": "4"
             }),
@@ -61,7 +56,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.69042012608497, 26.564248359612957],
                   [71.68893954670875, 26.56273214525404]]]),
             {
-                    
               "farm": 1,
               "system:index": "5"
             }),
@@ -72,7 +66,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.71185464124176, 26.48893341143628],
                   [71.71430081586334, 26.491583678757014]]]),
             {
-                    
               "farm": 1,
               "system:index": "6"
             }),
@@ -83,7 +76,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.30964869702814, 26.27059304512095],
                   [71.30879039014337, 26.26997731904183]]]),
             {
-                    
               "farm": 1,
               "system:index": "7"
             }),
@@ -94,7 +86,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.35819648503525, 26.211689160072673],
                   [71.35918353795273, 26.212459203234467]]]),
             {
-                    
               "farm": 1,
               "system:index": "8"
             }),
@@ -105,7 +96,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.30059289686596, 26.082143942622903],
                   [71.30183744184887, 26.083184654200814]]]),
             {
-                    
               "farm": 1,
               "system:index": "9"
             }),
@@ -116,7 +106,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.52481506030506, 25.99339555408031],
                   [71.52623126666492, 25.994051314061686]]]),
             {
-                    
               "farm": 1,
               "system:index": "10"
             }),
@@ -127,7 +116,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.51142547290272, 26.00130300394389],
                   [71.51030967395252, 26.000454425061797]]]),
             {
-                    
               "farm": 1,
               "system:index": "11"
             }),
@@ -140,7 +128,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.49978789513023, 25.99469239802646],
                   [71.50274905388267, 25.997083949191946]]]),
             {
-                    
               "farm": 1,
               "system:index": "12"
             }),
@@ -151,7 +138,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.4565374285877, 26.12172286248966],
                   [71.45971316406133, 26.123803572051642]]]),
             {
-                    
               "farm": 1,
               "system:index": "13"
             }),
@@ -162,7 +148,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.43353480407598, 26.115788783565286],
                   [71.43679637023808, 26.118177864564068]]]),
             {
-                    
               "farm": 1,
               "system:index": "14"
             }),
@@ -174,9 +159,28 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.44014376708867, 26.108390029400233],
                   [71.44189932734218, 26.106711595846487]]]),
             {
-                    
               "farm": 1,
               "system:index": "15"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[71.55520482721101, 26.18822585604963],
+                  [71.55773683252107, 26.190093578242255],
+                  [71.55713601770174, 26.190536435813552],
+                  [71.55471130075227, 26.188745740492163]]]),
+            {
+              "farm": 1,
+              "system:index": "16"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[71.38500822731328, 26.251931185976648],
+                  [71.38685358711552, 26.253663176385015],
+                  [71.38517988869023, 26.254740846273197],
+                  [71.38354910560918, 26.252854917407902]]]),
+            {
+              "farm": 1,
+              "system:index": "17"
             })]),
     NotFarmland = /* color: #00ffff */ee.FeatureCollection(
         [ee.Feature(
@@ -186,7 +190,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.35102595787362, 26.49501078865957],
                   [71.34980287056283, 26.493877744612245]]]),
             {
-                    
               "farm": 0,
               "system:index": "0"
             }),
@@ -197,7 +200,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.31102885704354, 26.48569645108256],
                   [71.30909766655282, 26.484198404705396]]]),
             {
-                    
               "farm": 0,
               "system:index": "1"
             }),
@@ -208,7 +210,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.28190789054929, 26.48847962449145],
                   [71.28338846992551, 26.489900795536204]]]),
             {
-                    
               "farm": 0,
               "system:index": "2"
             }),
@@ -219,7 +220,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.31824851651709, 26.503244672956402],
                   [71.3188278736643, 26.505779396891988]]]),
             {
-                    
               "farm": 0,
               "system:index": "3"
             }),
@@ -230,7 +230,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.65388990551946, 26.658253345360233],
                   [71.6560571304035, 26.660055939991878]]]),
             {
-                    
               "farm": 0,
               "system:index": "4"
             }),
@@ -241,7 +240,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.69724815583845, 26.66137479426754],
                   [71.69604652619978, 26.66262123822126]]]),
             {
-                    
               "farm": 0,
               "system:index": "5"
             }),
@@ -252,7 +250,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.35209925608706, 26.27777647010029],
                   [71.35587580638003, 26.28023918931801]]]),
             {
-                    
               "farm": 0,
               "system:index": "6"
             }),
@@ -263,7 +260,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.35946248769028, 26.210322320912294],
                   [71.35673736333115, 26.212054931209824]]]),
             {
-                    
               "farm": 0,
               "system:index": "7"
             }),
@@ -274,7 +270,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.34672248101026, 26.21186344014064],
                   [71.34818160271436, 26.213230261201396]]]),
             {
-                    
               "farm": 0,
               "system:index": "8"
             }),
@@ -285,7 +280,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.29080819837964, 26.080486493969598],
                   [71.29243898146069, 26.081874126999583]]]),
             {
-                    
               "farm": 0,
               "system:index": "9"
             }),
@@ -296,7 +290,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.30565690748608, 26.080486493969598],
                   [71.30788850538647, 26.082066852508277]]]),
             {
-                    
               "farm": 0,
               "system:index": "10"
             }),
@@ -306,7 +299,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.60346790504923, 25.936744055386782],
                   [71.6072444553422, 25.93226720526867]]]),
             {
-                    
               "farm": 0,
               "system:index": "11"
             }),
@@ -317,7 +309,6 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.46356347557628, 25.848775898664385],
                   [71.46682504173839, 25.853642117034077]]]),
             {
-                    
               "farm": 0,
               "system:index": "12"
             }),
@@ -327,7 +318,7 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
                   [71.47683198054415, 25.81260558008981],
                   [71.48232514460665, 25.809205793889028],
                   [71.48524338801485, 25.814305436600414]]]),
-            {       
+            {
               "farm": 0,
               "system:index": "13"
             }),
@@ -350,4 +341,14 @@ var Farmland = /* color: #ffc82d */ee.FeatureCollection(
             {
               "farm": 0,
               "system:index": "15"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[71.40746659530532, 26.244986753397622],
+                  [71.40381879104507, 26.242484794365204],
+                  [71.40622205032241, 26.24167645762748],
+                  [71.40914029373062, 26.24344709267509]]]),
+            {
+              "farm": 0,
+              "system:index": "16"
             })]);
