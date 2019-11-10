@@ -26,7 +26,10 @@ var nf_points= all_layers.select(bands).sampleRegions({
 
 
 //Decrease size of training/testing points for computational times (not clear if still needed)  
-var all_points = nf_points.merge(farm_points);
+var nf_small = nf_points.randomColumn('x',12412).filter(ee.Filter.lte('x',0.02));
+var farm_small = farm_points.randomColumn('x',12412).filter(ee.Filter.lte('x',0.02))
+
+var all_points = nf_small.merge(farm_small);
 
 
 
