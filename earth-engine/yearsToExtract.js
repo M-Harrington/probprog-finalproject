@@ -14,5 +14,5 @@ Export.image.toDrive({
   image: classified,
   description: 'imageToDriveTest',
   scale: 30,
-  region: geometry
+  region: roi
 });
