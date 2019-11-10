@@ -53,8 +53,6 @@ var palette = [
   '008000' //  forest (2) // green
 ];
 
-//Map.addLayer(classified, {min: 0, max: 1, palette: palette}, 'Land Use Classification');
-
 // Confusion matrix on training data
 print('RF error matrix: ', classifier.confusionMatrix());
 print('RF accuracy: ', classifier.confusionMatrix().accuracy());
@@ -63,3 +61,5 @@ print('RF accuracy: ', classifier.confusionMatrix().accuracy());
 var testAccuracy = classified_test.errorMatrix('farm', 'classification');
 print('Validation error matrix: ', testAccuracy);
 print('Validation overall accuracy: ', testAccuracy.accuracy());
+
+//Map.addLayer(classified, {min: 0, max: 1, palette: palette}, 'Land Use Classification');
