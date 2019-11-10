@@ -1,5 +1,8 @@
 /////Script to run entire proceedure 
  
+
+Map.setCenter(71.48545013599528, 26.203854380719925, 12); 
+ 
 /////////////////////////
 // Define ROI
 
@@ -402,6 +405,8 @@ var dataset = ee.ImageCollection('LANDSAT/LT05/C01/T1_SR')
 
 
 var dataset_med = dataset.median();
+var dataset_med = dataset_med.reproject('EPSG:4326', null, 1); //prevent GEE scaling
+
 
 
 // Compute the EVI using an expression.
@@ -454,12 +459,13 @@ var gauss_smooth = dataset_med.convolve(gaus);
 //TO BE FILLED IN
 
 
+
 /////////////////////////
 // (optional) Visualizations 
 // base dataset
 Map.addLayer(roi);
 Map.addLayer(dataset_med, visParams);
-Map.addLayer(evi,{min: -1, max: 1, palette: ['FF0000', '00FF00']});
+Map.addLayer(evi,{min: -1, max: 1});
 
 // Edge detection
 var visParams_can = {bands: ['B5', 'B4', 'B3']};  
@@ -472,6 +478,3 @@ Map.addLayer(smooth_edge_evi);
 Map.addLayer(smooth_edge1,visParams_can);
 Map.addLayer(smooth_edge2,visParams_can);
 Map.addLayer(gauss_smooth,visParams_can);
-
-
-Map.setCenter(71.48545013599528, 26.203854380719925, 9);
