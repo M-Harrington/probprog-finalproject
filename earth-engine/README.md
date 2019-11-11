@@ -14,8 +14,8 @@ Note: seasons correspond to
 - ~~Import well data~~
 - ~~Define ROI~~
 - For updating, fix some old code to be compatible with Landsat 5 instead of Landsat 7
-- Bring in Landsat 5 EVI and NDWI layers 
-- Add convolutions
+- ~~Bring in Landsat 5 EVI and NDWI layers~~ 
+- ~~Add convolutions~~
 - Update classification over larger number of time periods (on only the smaller area)
 - Export Classified pixels
 - Build Pyro Model
