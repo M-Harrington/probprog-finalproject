@@ -405,7 +405,7 @@ var dataset = ee.ImageCollection('LANDSAT/LT05/C01/T1_SR')
 
 
 var dataset_med = dataset.median();
-var dataset_med = dataset_med.reproject('EPSG:4326', null, 1); //prevent GEE scaling
+//var dataset_med = dataset_med.reproject('EPSG:4326', null, 1); //prevent GEE scaling
 
 
 
