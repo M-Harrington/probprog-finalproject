@@ -38,5 +38,6 @@ Export.image.toDrive({
   image: classified,
   description: 'imageToDriveTest',
   scale: 30,
+  'crs':'EPSG:4326',
   region: roi
 });
