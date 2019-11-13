@@ -23,7 +23,7 @@ for (i = 0; i < 4*17; i++) {
 for (i = 0; i < 4*17; i++) {
   ///////////Classify current year's image//////////////
   var dataset = ee.ImageCollection('LANDSAT/LT05/C01/T1_SR')
-                    .filterDate(extract_dates[i][0], extract_dates[i][0])
+                    .filterDate(extract_dates[i][0], extract_dates[i][1])
                     .map(cloudMaskL457);
 
   var dataset_med = dataset.median();
