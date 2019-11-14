@@ -1,4 +1,4 @@
-# Final Project Repository Template
+# Final Project Probabilisitc Programming
 
 This is the final project repository template for
 [Machine Learning with Probabilistic Programming](http://www.proditus.com/mlpp2019).
