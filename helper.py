@@ -2,8 +2,10 @@ import math
 import torch
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+
 
 def pairwise_distances(x, y=None):
     x_norm = (x ** 2).sum(1).view(-1, 1)
@@ -49,7 +51,8 @@ def visualize_posterior(samples):
 
     handles, labels = ax.get_legend_handles_labels()
 
-def plot_sample_data(XF,XW,YW,path="includes/sample-data-animation.mp4"):
+
+def plot_data(XF, XW, YW, path="includes/animation.mp4"):
     plt.clf()
     fig = plt.figure(figsize=(10, 10), dpi=100)
 
@@ -60,7 +63,7 @@ def plot_sample_data(XF,XW,YW,path="includes/sample-data-animation.mp4"):
     scat = plt.scatter(
         XW[:, 0], XW[:, 1], marker="s", s=20, c=[(0, 0, 0, 1)] * len(XW)
     )
-    label = plt.text(0, 0, '', fontsize=12)
+    label = plt.text(0, 0, "", fontsize=12)
 
     colors = []
     for obs in YW:
@@ -71,15 +74,52 @@ def plot_sample_data(XF,XW,YW,path="includes/sample-data-animation.mp4"):
     def update_plot(i, scat):
         scat.set_array(colors[i])
         label.set_text(["Sp", "Su", "Fa", "Wi"][i % 4])
-        return scat,
+        return (scat,)
 
     anim = animation.FuncAnimation(
         fig, update_plot, frames=range(len(XW)), fargs=(scat,), interval=1000
     )
-    
+
     plt.gray()
 
     # The following command requires ffmpeg to be installed on the system
     anim.save(path, fps=1)
 
+    plt.close()
+
+
+def plot_2d_dist(param1, param2, samples, model):
+    plt.rcParams.update({"font.size": 15})
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ax.scatter(samples[param1], samples[param2])
+    ax.set(
+        xlabel=r"Value of $\{}$".format(param1),
+        ylabel=r"Value of $\{}$".format(param2),
+        title="Scatter Plot of Parameter Samples from Posterior Distribution",
+    )
+    ax.set_xlim((samples[param1].min(), samples[param1].max()))
+    ax.set_ylim((samples[param2].min(), samples[param2].max()))
+
+    plt.savefig(
+        "includes/model{}/scatter_{}_{}.png".format(model, param1, param2)
+    )
+    plt.close()
+
+    # pcolormesh
+    fig, ax = plt.subplots(figsize=(10, 6))
+    hist_2d = ax.hist2d(
+        samples[param1], samples[param2], bins=(15, 15), cmap=plt.cm.jet
+    )
+    ax.set(
+        xlabel=r"Value of $\{}$".format(param1),
+        ylabel=r"Value of $\{}$".format(param2),
+        title="2d Histogram of Parameter Samples from Posterior Distribution",
+    )
+    plt.colorbar(hist_2d[3], ax=ax)
+
+    plt.savefig(
+        "includes/model{}/hist_{}_{}.png".format(model, param1, param2)
+    )
     plt.close()
