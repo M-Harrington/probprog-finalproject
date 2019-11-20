@@ -106,7 +106,7 @@ distance from the well decreases exponentially
 extraction.
 
 <img src="includes/depression_cone.png" alt="drawing" 
-width="600"/>
+width="400"/>
 
 Our model assumes roughly that there would be 
 an extracting well 
@@ -128,18 +128,17 @@ of surrounding vegitation. Note the regular shape
 of farmland 
 edges that are exploited using the 
 edge detection feature
-![]() ![](/includes/Right_Well2.PNG)
 
 <img src="includes/Left_well.png" alt="drawing" 
-width="600"/> 
+width="400"/> 
 <img src="includes/Right_Well2.PNG" alt="drawing" 
-width="600"/>
+width="400"/>
 
 **Figure 3:** Time Series showing depth to well at two 
 different highlighted wells
 
 <img src="includes/well_depth_plot.png" alt="drawing" 
-width="600"/>
+width="400"/>
 
 ### Dataset
 The dataset is comprised of classifications of 
@@ -173,7 +172,10 @@ bands Near Infrared (
 **Figure 4:** Image of EVI band (left) and a layer 
 of the same band (
   right) after using the Canny edge detection algorithm.
-![](/includes/evi.PNG) ![](/includes/evi_edge.PNG) 
+<img src="includes/evi.PNG" alt="drawing" 
+width="400"/>
+<img src="includes/evi_edge.PNG" alt="drawing" 
+width="400"/>
 
 We then create a dataset of training and 
 testing pixels by using 
@@ -187,7 +189,9 @@ indeed anthropogenic vegitation.
 
 **Figure 5:** Real color high-resolution image from Google Earth 
 Image, proprietary 2019.
-![](/includes/GoogleEarth_realcolor.PNG)
+<img src="includes/GoogleEarth_realcolor.PNG" alt="drawing" 
+width="400"/>
+
 
 We then use the above-mentioned features 
 and the training and 
@@ -664,9 +668,6 @@ if save_samples:
 
 
 ```python
-if plot:
-    plot_2d_dist("delta", "theta_f", samples, "1")
-
 display(
     Image("includes/model1/scatter_delta_theta_f.png"),
     Image("includes/model1/hist_delta_theta_f.png")
@@ -711,12 +712,6 @@ e^{(-0.001/.05)}\times
 
 
 ```python
-plot_timeline(
-    "mu",
-    samples["mu"],
-    "includes/model1/mu.png"
-)
-
 Image("includes/model1/mu.png")
 ```
 
@@ -729,13 +724,6 @@ Image("includes/model1/mu.png")
 
 
 ```python
-plot_timeline(
-    "gamma_s",
-    samples["sf"],
-    "includes/model1/sf.png",
-    xticks=["Winter", "Spring", "Fall"]
-)
-
 Image("includes/model1/sf.png")
 ```
 
@@ -750,28 +738,6 @@ Image("includes/model1/sf.png")
 
 
 ```python
-if plot:
-    fig = plt.figure(figsize=(12, 10))
-    
-    preds = predict1(
-        XW_r, XF_r, YF_r, samples, 
-        n_seasons=3, seasons=XS_r, recon=True
-    )
-    preds = [x.mean(0) for x in preds]
-    
-    Y = [x.cpu().numpy() for x in YW_r]
-    
-    for p, y in zip(preds, Y):
-        plt.scatter(y, p, s=40)
-        
-    plt.ylabel("Posterior Predictive - Water Level")
-    plt.xlabel("Observations - Water Level")
-    plt.title("Actual vs Predicted across Timesteps")
-    
-    plt.savefig("includes/model1/predicted_actual.png")
-    
-    plt.close()
-
 Image("includes/model1/predicted_actual.png")
 ```
 
@@ -1025,9 +991,6 @@ if save_samples:
 
 
 ```python
-if plot:
-    plot_2d_dist("delta_c", "delta_p", samples, "2")
-    
 display(
     Image("includes/model2/scatter_delta_c_delta_p.png"),
     Image("includes/model2/hist_delta_c_delta_p.png")
@@ -1044,9 +1007,6 @@ display(
 
 
 ```python
-if plot:
-    plot_2d_dist("delta_c", "theta_f", samples, "2")
-    
 display(
     Image("includes/model2/scatter_delta_c_theta_f.png"),
     Image("includes/model2/hist_delta_c_theta_f.png")
@@ -1063,9 +1023,6 @@ display(
 
 
 ```python
-if plot:
-    plot_2d_dist("delta_p", "theta_f", samples, "2")
-    
 display(
     Image("includes/model2/scatter_delta_p_theta_f.png"),
     Image("includes/model2/hist_delta_p_theta_f.png")
@@ -1082,13 +1039,6 @@ display(
 
 
 ```python
-plot_timeline(
-    "gamma_s",
-    samples["sf"],
-    "includes/model2/sf.png",
-    xticks=["Winter", "Spring", "Fall"]
-)
-
 Image("includes/model2/sf.png")
 ```
 
@@ -1103,35 +1053,6 @@ Image("includes/model2/sf.png")
 
 
 ```python
-if plot:
-    fig = plt.figure(figsize=(12, 10))
-    
-    preds = predict2(
-        XW_r, XF_r, YF_r, samples,
-        n_seasons=3, seasons=XS_r, recon=True
-    )
-
-    preds = [x.mean(0) for x in preds]
-    Y = [x.cpu().numpy() for x in YW_r]
-
-    preds = [Y[0]] + preds
-
-    for i in range(1, len(preds)):
-        preds[i] += preds[i-1]
-
-    for p, y in zip(preds, Y):
-        plt.scatter(y, p, s=40)
-
-    plt.ylabel("Posterior Predictive - Water Level")
-    plt.xlabel("Observations - Water Level")
-    plt.title("Actual vs Predicted across Timesteps")
-    
-    plt.plot([-50, 0], [-50, 0])
-
-    plt.savefig("includes/model2/predicted_actual.png")
-
-    plt.close()
-    
 Image("includes/model2/predicted_actual.png")
 ```
 
