@@ -88,7 +88,7 @@ def plot_data(XF, XW, YW, path="includes/animation.mp4"):
     plt.close()
 
 
-def plot_2d_dist(param1, param2, samples, model,sci=True):
+def plot_2d_dist(param1, param2, samples, model, sci=True):
     plt.rcParams.update({"font.size": 15})
 
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -102,7 +102,7 @@ def plot_2d_dist(param1, param2, samples, model,sci=True):
     ax.set_xlim((samples[param1].min(), samples[param1].max()))
     ax.set_ylim((samples[param2].min(), samples[param2].max()))
     if sci:
-        ax.ticklabel_format(style='sci', scilimits=(-3,2))
+        ax.ticklabel_format(style='sci', scilimits=(-3, 2))
 
     plt.savefig(
         "includes/model{}/scatter_{}_{}.png".format(model, param1, param2)
@@ -120,11 +120,54 @@ def plot_2d_dist(param1, param2, samples, model,sci=True):
         title="2d Histogram of Parameter Samples from Posterior Distribution",
     )
     if sci:
-        ax.ticklabel_format(style='sci', scilimits=(-3,2))
+        ax.ticklabel_format(style='sci', scilimits=(-3, 2))
 
     plt.colorbar(hist_2d[3], ax=ax)
 
     plt.savefig(
         "includes/model{}/hist_{}_{}.png".format(model, param1, param2)
     )
+    plt.close()
+
+
+def plot_timeline(variable, samples, path, xticks=None):
+    # Grab quantiles and medians and plot them
+    medians = np.median(samples, 0)
+    quantiles = np.quantile(
+        samples, q=(0.025, 0.975), axis=0
+    )
+
+    fig, ax = plt.subplots(figsize=(10, 6),)
+    ax.plot(medians)
+    ax.set(
+        ylabel=r"Posteriror Values of $\{}$".format(variable),
+        xlabel=r"Season",
+        title=r"Scatter Plot of Median $\{}$ Values".format(variable),
+    )
+    if xticks is not None:
+        plt.xticks(np.arange(len(xticks)), xticks)
+
+    plotline, caplines, barlinecols = plt.errorbar(
+        list(range(len(medians))),
+        medians,
+        yerr=quantiles[1],
+        lolims=True,
+        label="uplims=True",
+        color="orange",
+    )
+    caplines[0].set_marker("_")
+    caplines[0].set_markersize(10)
+
+    plotline2, caplines2, barlinecols2 = plt.errorbar(
+        list(range(len(medians))),
+        medians,
+        yerr=quantiles[0],
+        uplims=True,
+        label="uplims=True",
+        color="orange",
+    )
+    caplines2[0].set_marker("_")
+    caplines2[0].set_markersize(10)
+
+    plt.savefig(path)
     plt.close()
