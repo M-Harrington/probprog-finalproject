@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import datetime as dt
 
+import pickle
 import os
 
 path = []
@@ -19,8 +20,7 @@ for file_name in os.listdir("evi_layers/"):
     evi_datasets.append(evi_tmp.assign_coords(date=date).sel(band=1))
 
 evi_dataset = xr.concat(evi_datasets, dim="date")
-xcoord = evi_dataset.isel(
-    date=[0]
+xcoord = evi_dataset.isel(date=[0])
 ycoord = evi_dataset.isel(date=[0]).y.values
 
 
@@ -30,7 +30,6 @@ evi_coords = np.array(c_list)
 wells = pd.read_csv("pp_well_data.csv", index_col=0)
 wells = wells[wells["well.level"].notna()]
 wells["well.level"] = wells["well.level"] * -1
-
 
 
 def timefunc(well_time):
@@ -147,8 +146,6 @@ for i in range(len(L)):
             temp.append(L[i][j])
 
     y_farm[i] = temp
-
-import pickle
 
 os.chdir("C://Users/Matttt/Documents/probprog-finalproject/preprocessing")
 
