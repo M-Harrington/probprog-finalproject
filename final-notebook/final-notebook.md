@@ -13,15 +13,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import pyro.distributions as dist
-import matplotlib.animation as animation
 
 from functools import partial
 from pyro.infer.mcmc import NUTS
 from pyro.infer.mcmc.api import MCMC
-from helper import plot_data, plot_2d_dist, summary
+from helper import pairwise_distances, summary
 from IPython.display import Video, HTML, Image, display
-from helper import pairwise_distances, visualize_posterior
-from helper import plot_timeline
 
 pyro.set_rng_seed(0)
 ```
@@ -34,7 +31,6 @@ pyro.set_rng_seed(0)
 pyro.enable_validation(True)
 
 smoke_test = "CI" in os.environ
-smoke_test = False
 
 assert pyro.__version__.startswith("0.4.1")
 ```
@@ -50,19 +46,17 @@ if torch.cuda.is_available():
 use_gp = False
 
 if smoke_test:
-    plot = True
     train = True
     save_samples = False
     
     num_samples = 1
     warmup_steps = 1
 else:
-    plot = False
     train = False
     save_samples = False
     
-    num_samples = 100
-    warmup_steps = 400
+    num_samples = 1
+    warmup_steps = 1
 ```
 
 ## Background
@@ -343,62 +337,6 @@ def model1(
                 )
 ```
 
-
-```python
-def predict1(
-    XW, XF, YF, samples, n_seasons=4,
-    seasons=None, gp=False, recon=False
-):
-    sigma = samples["sigma"]
-    delta = samples["delta"]
-
-    if gp:
-        theta_w = samples["theta_w"]
-
-    theta_f = samples["theta_f"]
-
-    sf = samples["sf"]
-    if seasons is None:
-        seasons = np.tile(
-            np.arange(n_seasons), int(len(YW) / n_seasons + 1)
-        )
-        seasons = seasons[:len(YW)]
-
-    mu = samples["mu"]
-
-    samples = []
-    for t in range(len(YF)):
-        YF_ = YF[t].cpu().numpy()
-
-        if gp:
-            pdx = pairwise_distances(XW[t]).cpu().numpy()
-        pdf = pairwise_distances(XW[t], XF[t]).cpu().numpy()
-
-        samples_ = []
-        for i in range(len(delta)):
-            if gp:
-                sg = np.exp(-pdx / theta_w[i])
-            else:
-                sg = sigma[i]
-
-            mean = (
-                mu[i, t]
-                - delta[i] * np.matmul(
-                    np.exp(-pdf / theta_f[i]), YF_
-                )
-                + sf[i][seasons[t]]
-            )
-            if recon:
-                samples_.append(mean)
-            else:
-                samples_.append(np.random.normal(mean, sg))
-
-        samples_ = np.array(samples_)
-        samples.append(samples_)
-
-    return samples
-```
-
 ## Sanity Check - Working with Sample Data
 
 ### Reading the Sample Data
@@ -423,21 +361,6 @@ XW = XW[0]
 
 XF = data_farms[["latitude", "longitude"]].values
 YF = data_farms["observation"].values
-```
-
-
-```python
-if plot:
-    try: 
-        plot_data(
-            XF, XW, YW,
-            path="includes/sample-data-animation.mp4"
-        )
-    except ValueError:
-        print(
-            "The above command requires " 
-            + "ffmpeg to be installed on the system"
-        )
 ```
 
 
@@ -560,20 +483,6 @@ with open("data/real-data.pkl", "rb") as f:
 
 
 ```python
-Video("includes/real-data-animation.mp4")
-```
-
-
-
-
-<video src="includes/real-data-animation.mp4" controls  >
-      Your browser does not support the <code>video</code> element.
-    </video>
-
-
-
-
-```python
 XF_r = [torch.tensor(x) for x in XF_r]
 YF_r = [torch.tensor(x) for x in YF_r]
 
@@ -675,11 +584,11 @@ display(
 ```
 
 
-![png](output_39_0.png)
+![png](output_36_0.png)
 
 
 
-![png](output_39_1.png)
+![png](output_36_1.png)
 
 
 $\theta_f$ implicitly determines 
@@ -718,7 +627,7 @@ Image("includes/model1/mu.png")
 
 
 
-![png](output_41_0.png)
+![png](output_38_0.png)
 
 
 
@@ -730,7 +639,7 @@ Image("includes/model1/sf.png")
 
 
 
-![png](output_42_0.png)
+![png](output_39_0.png)
 
 
 
@@ -744,7 +653,7 @@ Image("includes/model1/predicted_actual.png")
 
 
 
-![png](output_44_0.png)
+![png](output_41_0.png)
 
 
 
@@ -753,7 +662,7 @@ that our model is not yet fitting
 well to the testing data.  Obvious 
 stratifications by time step (color)
 can be seen indicating an 
-inflexibility within the model.  
+inflexibility within the model.
 Examining our assumptions more
 closely we can see that this is 
 because we only allow for a single 
@@ -852,59 +761,6 @@ def model2(XW, YW, YF, WF_distances, n_seasons=3, seasons=None):
             )
 ```
 
-
-```python
-def predict2(
-    XW, XF, YF, samples, n_seasons=3, seasons=None, recon=False
-):
-    sigma = samples["sigma"]
-    delta_c = samples["delta_c"]
-    delta_p = samples["delta_p"]
-
-    theta_f = samples["theta_f"]
-
-    sf = samples["sf"]
-    if seasons is None:
-        seasons = np.tile(
-            np.arange(n_seasons), int(len(YW) / n_seasons + 1)
-        )
-        seasons = seasons[:len(YW)]
-
-    YF = [x.cpu().numpy() for x in YF]
-
-    samples = []
-    samples_ = [0] * len(sigma)
-    for t in range(1, len(YF)):
-        pdf_c = pairwise_distances(XW[t], XF[t])
-        pdf_p = pairwise_distances(XW[t - 1], XF[t - 1])
-
-        pdf_c = pdf_c.cpu().numpy()
-        pdf_p = pdf_p.cpu().numpy()
-
-        for i in range(len(sigma)):
-            sg = sigma[i]
-            mean = (
-                samples_[i]
-                - delta_c[i] * np.matmul(
-                    np.exp(-pdf_c / theta_f[i]), YF[t]
-                )
-                - delta_p[i] * np.matmul(
-                    np.exp(-pdf_p / theta_f[i]), YF[t-1]
-                )
-                + sf[i][seasons[t]]
-            )
-
-            if recon:
-                samples_[i] = mean
-            else:
-                samples_[i] = np.random.normal(mean, sg)
-
-        samples_ = np.array(samples_)
-        samples.append(samples_)
-
-    return samples
-```
-
 ### Preparing the Real Data
 
 
@@ -998,11 +854,11 @@ display(
 ```
 
 
-![png](output_58_0.png)
+![png](output_54_0.png)
 
 
 
-![png](output_58_1.png)
+![png](output_54_1.png)
 
 
 
@@ -1014,11 +870,11 @@ display(
 ```
 
 
-![png](output_59_0.png)
+![png](output_55_0.png)
 
 
 
-![png](output_59_1.png)
+![png](output_55_1.png)
 
 
 
@@ -1030,11 +886,11 @@ display(
 ```
 
 
-![png](output_60_0.png)
+![png](output_56_0.png)
 
 
 
-![png](output_60_1.png)
+![png](output_56_1.png)
 
 
 
@@ -1045,7 +901,7 @@ Image("includes/model2/sf.png")
 
 
 
-![png](output_61_0.png)
+![png](output_57_0.png)
 
 
 
@@ -1059,6 +915,20 @@ Image("includes/model2/predicted_actual.png")
 
 
 
-![png](output_63_0.png)
+![png](output_59_0.png)
 
 
+
+This second specification shows
+more flexibility and achieves a
+higher R^2 (with some scaling issues) 
+on in-sample predictions. Likewise we
+see expected dependencies between the
+parameters of interest. We see a 
+complimentary relationship between 
+the two deltas and a supplementary 
+relationship between either delta
+and theta. This makes sense because
+in posterior samples where theta is 
+large, both deltas will take a smaller
+role in driving well water change.
