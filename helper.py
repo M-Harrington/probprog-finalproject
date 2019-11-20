@@ -88,7 +88,7 @@ def plot_data(XF, XW, YW, path="includes/animation.mp4"):
     plt.close()
 
 
-def plot_2d_dist(param1, param2, samples, model):
+def plot_2d_dist(param1, param2, samples, model,sci=True):
     plt.rcParams.update({"font.size": 15})
 
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -101,6 +101,8 @@ def plot_2d_dist(param1, param2, samples, model):
     )
     ax.set_xlim((samples[param1].min(), samples[param1].max()))
     ax.set_ylim((samples[param2].min(), samples[param2].max()))
+    if sci:
+        ax.ticklabel_format(style='sci', scilimits=(-3,2))
 
     plt.savefig(
         "includes/model{}/scatter_{}_{}.png".format(model, param1, param2)
@@ -117,6 +119,9 @@ def plot_2d_dist(param1, param2, samples, model):
         ylabel=r"Value of $\{}$".format(param2),
         title="2d Histogram of Parameter Samples from Posterior Distribution",
     )
+    if sci:
+        ax.ticklabel_format(style='sci', scilimits=(-3,2))
+
     plt.colorbar(hist_2d[3], ax=ax)
 
     plt.savefig(
