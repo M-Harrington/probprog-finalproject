@@ -10,8 +10,3 @@ We aim to use a model similar to Gaussian Process/Kernel regression to determine
 
 *********
 &nbsp;
-&nbsp;
-
-&nbsp;
-
-&nbsp;
